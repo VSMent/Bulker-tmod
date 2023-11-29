@@ -1,0 +1,32 @@
+# This file will automatically update with entries for new content after a build and reload
+
+Items: {
+	bulk_sword: {
+		DisplayName: bulk_sword
+		Tooltip: tool tip?
+	}
+}
+
+Configs: {
+	Config: {
+		ExampleWingsToggle: {
+			Tooltip: ""
+			Label: Example Wings Toggle
+		}
+
+		Headers.Items: Items Header
+		DisplayName: Config
+
+		WeaponWithGrowingDamageToggle: {
+			Label: Weapon With Growing Damage Toggle
+			Tooltip: ""
+		}
+
+		vector2Size: {
+			Label: vector2 Size
+			Tooltip: ""
+		}
+	}
+}
+
+Keybinds.ShowMenu.DisplayName: Show Menu
