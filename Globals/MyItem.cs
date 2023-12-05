@@ -33,9 +33,16 @@ public class MyItem : GlobalItem {
     }
 
     item.stack = BulkUtils.GetNewStackValue(item);
-
-    // and -money * bulk mode
-    isBuying = true;
+    if (item.maxStack == 1) {
+      item.stack = 1;
+      IEntitySource source = Main.LocalPlayer.GetSource_FromThis();
+      for (int i = 0; i < BulkUtils.GetBulkMultiplier() - 1; i++) {
+        Main.LocalPlayer.QuickSpawnItem(source, item, 1);
+      }
+    } else {
+      isBuying = true;
+    }
+#if DEBUG
     Main.NewText($"Item {item.Name} was bought");
     // For fun, we'll give the buying player a 50% chance to die whenever they buy this item from an NPC.
     if (!Main.rand.NextBool()) {

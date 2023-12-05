@@ -14,8 +14,8 @@ public class BulkUtils {
     int result = 1;
     if (mode == BulkMode.xStack) {
       result = item.maxStack;
-    } else if (item.maxStack == 1) {
-      result = 1; // Drop or add items to inventory
+    // } else if (item.maxStack == 1) {
+      // result = 10; // Drop or add items to inventory
     } else {
       result = (int)mode;
     }
@@ -32,17 +32,13 @@ public class BulkUtils {
 #if DEBUG
   public static string GetPriceString(long price) {
     string result = "";
-    for (int i = 1_000_000; i > 0; i /= 100) {
-      char coinChar = i switch {
-        1_000_000 => 'p',
-        10_000 => 'g',
-        100 => 's',
-        _ => 'c'
-      };
-      result += $"{price / i}{coinChar} ";
-      price -= (int)price / i * i;
-    }
-
+    result += $"{price / Item.platinum}p ";
+    price -= (price / Item.platinum) * Item.platinum;
+    result += $"{price / Item.gold}g ";
+    price -= (price / Item.gold) * Item.gold;
+    result += $"{price / Item.silver}s ";
+    price -= (price / Item.silver) * Item.silver;
+    result += $"{price / Item.copper}c";
     return result;
   }
 #endif
