@@ -11,8 +11,8 @@
     - [x] Get bulk items
     - [x] Get bulk items on repeated buy
     - [ ] Get bulk non stackable items (add to inventory / drop on the ground)
-    - [ ] Spend money according to bulk settings
-        - [ ] Handle not enough money
+    - [x] Spend money according to bulk settings
+        - [x] Handle not enough money
 - [ ] Toggle "buy max if not enough money" (config)
 - [x] Show buttons only in shop menu
 - [ ] Configs
