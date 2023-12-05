@@ -22,4 +22,28 @@ public class BulkUtils {
 
     return result;
   }
+
+  public static int GetBulkMultiplier() {
+    BulkMode mode = GetCurrentBulkMode();
+    int result = (int)mode;
+    return result;
+  }
+
+#if DEBUG
+  public static string GetPriceString(long price) {
+    string result = "";
+    for (int i = 1_000_000; i > 0; i /= 100) {
+      char coinChar = i switch {
+        1_000_000 => 'p',
+        10_000 => 'g',
+        100 => 's',
+        _ => 'c'
+      };
+      result += $"{price / i}{coinChar} ";
+      price -= (int)price / i * i;
+    }
+
+    return result;
+  }
+#endif
 }
