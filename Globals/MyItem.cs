@@ -9,14 +9,14 @@ using Terraria.UI;
 namespace Bulker.Globals;
 
 public class MyItem : GlobalItem {
-  // public override bool InstancePerEntity => true;
-  private static bool isBuying = false;
+  public override bool InstancePerEntity => true;
+  public bool IsBuying = false;
 
   public override void OnStack(Item destination, Item source, int numToTransfer) {
-    if (isBuying) {
+    if (source.isAShopItem) {
       int customNumToTransfer = BulkUtils.GetNewStackValue(destination);
       destination.stack += Math.Max(customNumToTransfer - numToTransfer, 1);
-      isBuying = false;
+      IsBuying = false;
     }
 
     // base.OnStack(destination, source, numToTransfer);
@@ -32,18 +32,20 @@ public class MyItem : GlobalItem {
       return;
     }
 
-    item.stack = BulkUtils.GetNewStackValue(item);
-    if (item.maxStack == 1) {
-      item.stack = 1;
-      IEntitySource source = Main.LocalPlayer.GetSource_FromThis();
-      for (int i = 0; i < BulkUtils.GetBulkMultiplier() - 1; i++) {
-        Main.LocalPlayer.QuickSpawnItem(source, item, 1);
+    item.TryGetGlobalItem(out MyItem myItem);
+    if (myItem is { IsBuying: true }) {
+      item.stack = BulkUtils.GetNewStackValue(item);
+      if (item.maxStack == 1) {
+        item.stack = 1;
+        IEntitySource source = Main.LocalPlayer.GetSource_FromThis();
+        for (int i = 0; i < BulkUtils.GetBulkMultiplier() - 1; i++) {
+          Main.LocalPlayer.QuickSpawnItem(source, item, 1);
+        }
       }
-    } else {
-      isBuying = true;
     }
 #if DEBUG
     Main.NewText($"Item {item.Name} was bought");
+#endif
     // For fun, we'll give the buying player a 50% chance to die whenever they buy this item from an NPC.
     if (!Main.rand.NextBool()) {
       return;
